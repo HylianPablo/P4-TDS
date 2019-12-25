@@ -171,7 +171,9 @@ public class RedBlackBoxTest {
 	public void tearDown() {
 		l1 = null;
 		l2 = null;
+		l3 = null;
 		e = null;
+		e2 = null;
 	}
 
 }

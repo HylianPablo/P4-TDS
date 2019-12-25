@@ -20,34 +20,35 @@ public class RedWhiteBoxTest {
 
 	@Mock
 	private Estacion e;
-	@Mock private Estacion e2;
+	@Mock
+	private Estacion e2;
 
 	private Red r;
 
 	@BeforeEach
 	public void setUp() {
-		l1=createMock(Linea.class);
-		l2=createMock(Linea.class);
-		e=null;
-		e2=null;
-		
+		l1 = createMock(Linea.class);
+		l2 = createMock(Linea.class);
+		e = null;
+		e2 = null;
+
 		ArrayList<Linea> al = new ArrayList<>();
 		al.add(l1);
 		al.add(l2);
-		
+
 		r = new Red(al);
 	}
 
 	@Tag("WhiteBox")
 	@Test
 	public void correspondenciaLineasAmbasNulas() {
-		l1=null;
-		l2=null;
+		l1 = null;
+		l2 = null;
 		assertThrows(IllegalArgumentException.class, () -> {
 			r.correspondenciaLineas(l1, l2);
 		});
 	}
-	
+
 	@Tag("WhiteBox")
 	@Test
 	public void conexionSinTransbordoAmbasNulas() {
@@ -55,7 +56,7 @@ public class RedWhiteBoxTest {
 			r.conexionSinTransbordo(e2, e2);
 		});
 	}
-	
+
 	@Tag("WhiteBox")
 	@Test
 	public void conexionConTransbordoAmbasNulas() {
@@ -63,11 +64,11 @@ public class RedWhiteBoxTest {
 			r.conexionConTransbordo(e2, e2);
 		});
 	}
-	
+
 	@AfterEach
 	public void tearDown() {
-		l1=null;
-		l2=null;
+		l1 = null;
+		l2 = null;
 	}
 
 }
