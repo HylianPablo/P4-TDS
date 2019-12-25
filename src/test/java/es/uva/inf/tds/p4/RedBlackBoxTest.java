@@ -184,7 +184,7 @@ public class RedBlackBoxTest {
 		replay(l1);
 		replay(l2);
 		
-		assertNull(r.conexionConTransbordo(e, e2)[0]);
+		assertNull(r.conexionConTransbordo(e, e2)[2]);
 		verify(l1);
 		verify(l2);
 	}

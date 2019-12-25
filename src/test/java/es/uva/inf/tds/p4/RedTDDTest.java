@@ -262,6 +262,14 @@ public class RedTDDTest {
 	@Tag("Isolation")
 	@Test
 	public void estacionMasCercana() {
+		Estacion e0=createMock(Estacion.class);
+		Estacion[] est0 = new Estacion[1];
+		est0[0]=e0;
+		
+		CoordenadasGPS cgps0= createMock(CoordenadasGPS.class);
+		CoordenadasGPS[] argps0= new CoordenadasGPS[1];
+		argps0[0]=cgps0;
+		
 		Estacion[] est = new Estacion[1];
 		est[0]=e;
 		Estacion e2=createMock(Estacion.class);
@@ -269,37 +277,42 @@ public class RedTDDTest {
 		est2[0]=e2;
 		
 		CoordenadasGPS cgps2= createMock(CoordenadasGPS.class);
-				//new CoordenadasGPS(90.0,-1.0);
 		CoordenadasGPS[] argps2= new CoordenadasGPS[1];
 		argps2[0]=cgps2;
 		
 		CoordenadasGPS gps1 = createMock(CoordenadasGPS.class);
 		expect(gps1.getDistanciaA(cgps)).andReturn(1.0).anyTimes();
+		expect(gps1.getDistanciaA(cgps0)).andReturn(10.0).anyTimes();
 		expect(gps1.getDistanciaA(cgps2)).andReturn(100.0).anyTimes();
 		
+		expect(e0.getCoordenadasGPS()).andReturn(argps0).anyTimes();
 		expect(e.getCoordenadasGPS()).andReturn(argps).anyTimes();
 		expect(e2.getCoordenadasGPS()).andReturn(argps2).anyTimes();
+		expect(l1.getEstaciones(false)).andReturn(est0).anyTimes();
 		expect(l1.getEstaciones(true)).andReturn(est).anyTimes();
-		expect(l1.getEstaciones(false)).andReturn(est).anyTimes();
 		expect(l2.getEstaciones(true)).andReturn(est2).anyTimes();
 		expect(l2.getEstaciones(false)).andReturn(est2).anyTimes();
 		
 		replay(e);
 		replay(e2);
+		replay(e0);
 		replay(l1);
 		replay(l2);
 		
 				//new CoordenadasGPS(5.0,-1.0);
 		replay(cgps);
 		replay(cgps2);
+		replay(cgps0);
 		replay(gps1);
 		assertEquals(e,r.getEstacionMasCercana(gps1));
 		verify(e);
 		verify(e2);
+		verify(e0);
 		verify(l1);
 		verify(l2);
 		verify(cgps);
 		verify(cgps2);
+		verify(cgps0);
 		verify(gps1);
 	}
 	
