@@ -151,6 +151,16 @@ public class RedBlackBoxTest {
 	@Tag("BlackBoxTestFirst")
 	@Tag("Isolation")
 	@Test
+	public void eliminarLineaNull() {
+		Linea l3 = null;
+		assertThrows(IllegalArgumentException.class, () -> {
+			r.removeLinea(l3);
+		});
+	}
+	
+	@Tag("BlackBoxTestFirst")
+	@Tag("Isolation")
+	@Test
 	public void conexionSinTransbordoInexistente() {
 		Estacion e2 = createMock(Estacion.class);
 		expect(l1.contieneEstacion(e)).andReturn(true).anyTimes();

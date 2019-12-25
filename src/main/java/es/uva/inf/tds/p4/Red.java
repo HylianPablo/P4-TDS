@@ -1,8 +1,11 @@
 package es.uva.inf.tds.p4;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Red {
+	
+	private ArrayList<Linea> lineas;
 
 	/**
 	 * Crea una red de líneas de metro a través de un conjunto inicial de líneas cuyo número mínimo debe ser dos.
@@ -10,8 +13,15 @@ public class Red {
 	 * @throws {@code IllegalArgumentException} si el parámetro introducido es nulo.
 	 * @throws {@code IllegalArgumentException} si el número de líneas iniciales es menor que dos.
 	 */
-	public Red(ArrayList<Linea> al) {
-		// Constructor a través de un arraylist
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public Red(List<Linea> al) {
+		if (al==null) {
+			throw new IllegalArgumentException();
+		}
+		if(al.size()<2) {
+			throw new IllegalArgumentException();
+		}
+		lineas= (ArrayList) al;
 	}
 
 	/**
@@ -21,7 +31,10 @@ public class Red {
 	 * @throws {@code IllegalArgumentException} en caso de introducir un número nulo.
 	 */
 	public Linea getLinea(int i) {
-		// Recorrer arraylist buscando numero
+		for(int j=0;j<lineas.size();j++) {
+			if(lineas.get(j).getNumero()==i)
+				return lineas.get(j);
+		}
 		return null;
 	}
 
@@ -32,7 +45,10 @@ public class Red {
 	 * @throws {@code IllegalArgumentException} en caso de introducir un color nulo.
 	 */
 	public Linea getLinea(String color) {
-		// Recorrer arraylist buscando color
+		for(int i=0;i<lineas.size();i++) {
+			if(lineas.get(i).getColor().equals(color))
+				return lineas.get(i);
+		}
 		return null;
 	}
 
@@ -43,8 +59,20 @@ public class Red {
 	 * @throws {@code IllegalArgumentException} en el caso de introducir una linea con número o color ya existentes en la red.
 	 */
 	public void addLinea(Linea l) {
-		// añadir con add
-		
+		if(l==null) {
+			throw new IllegalArgumentException();
+		}
+		if (isRepetida(l))
+			throw new IllegalArgumentException();
+		lineas.add(l);
+	}
+	
+	private boolean isRepetida(Linea l) {
+		for(int i=0;i<lineas.size();i++) {
+			if(l.getNumero()==lineas.get(i).getNumero() || l.getColor().equals(lineas.get(i).getColor()))
+				return true;
+		}
+		return false;
 	}
 
 	/**
@@ -52,19 +80,23 @@ public class Red {
 	 * @return {@code Array} de {@code Linea} que representa el conjunto de líneas de la red.
 	 */
 	public Linea[] getArrayLineas() {
-		// devolver toArray
-		return null;
+		return lineas.toArray(new Linea[0]);
 	}
 
 	/**
 	 * Elimina una línea específica de la red.
 	 * @param l {@code Linea} concreta a eliminar de la red.
 	 * @throws {@code IllegalStateException} en el caso de que al eliminar una línea, el total de líneas de la red sea menor que cero.
-	 * @throws {@code IllegalArgumentException} en el caso de que la línea a borrar no exista en la red.
+	 * @throws {@code IllegalArgumentException} en el caso de que la línea a borrar no exista en la red o la línea a borrar sea nula.
 	 */
 	public void removeLinea(Linea l) {
-		// eliminar con remove
-		
+		if(lineas.size()==2) 
+			throw new IllegalStateException();
+		if(l==null) 
+			throw new IllegalArgumentException();
+		if(!lineas.contains(l))
+			throw new IllegalArgumentException();
+		lineas.remove(l);
 	}
 
 	/**
@@ -73,9 +105,15 @@ public class Red {
 	 * @return Lista de lineas que pasan por la estación.
 	 * @throws {@code IllegalArgumentException} si la estación introducida es nula.
 	 */
-	public ArrayList<Linea> getLineasPorEstacion(Estacion e) {
-		// Recorrer lineas y añadir al resultado las que tengan a la estacion
-		return null;
+	public List<Linea> getLineasPorEstacion(Estacion e) {
+		if(e==null)
+			throw new IllegalArgumentException();
+		ArrayList<Linea> resultado = new ArrayList<>();
+		for(int i=0;i<lineas.size();i++) {
+			if(lineas.get(i).contieneEstacion(e))
+				resultado.add(lineas.get(i));
+		}
+		return resultado;
 	}
 
 	/**
@@ -84,22 +122,30 @@ public class Red {
 	 * @return Lista de información asociada a las líneas que pasan por la estación.
 	 * @throws {@code IllegalArgumentException} si la estación introducida es nula.
 	 */
-	public ArrayList<String> getInfoLineasPorEstacion(Estacion e) {
-		// TODO Recorrer lineas y añadir al resultado un string compuesto por nombre y color por cada linea que tenga a la estacion
-		// Utilizar primero metodo anterior
-		return null;
+	public List<String> getInfoLineasPorEstacion(Estacion e) {
+		if(e==null) 
+			throw new IllegalArgumentException();
+		String data;
+		List<Linea> lin = getLineasPorEstacion(e);
+		ArrayList <String> resultado = new ArrayList<>();
+		for(int i=0;i<lin.size();i++) {
+			data="Linea "+lin.get(i).getNumero()+", "+lin.get(i).getColor();
+			resultado.add(data);
+		}
+		return resultado;
 	}
 
 	/**
 	 * Devuelve las estaciones donde existe correspondencia para las líneas introducidas por parámetro.
 	 * @param l1 {@code Linea} a comprobar si existe correspondencia.
 	 * @param l2 {@code Linea} a comprobar si existe correspondencia.
-	 * @return Lista de estaciones donde existe correspondecia entre las líneas. De no existir correspondencia en ningín punto, se devolverá una lista vacía.
+	 * @return Lista de estaciones donde existe correspondecia entre las líneas. De no existir correspondencia en ningín punto, se devolverá un array vacío.
 	 * @throws {@code IllegalArgumentException} si una o ambas líneas introducidas es nula.
 	 */
-	public ArrayList<Estacion> correspondenciaLineas(Linea l1, Linea l2) {
-		// TODO Comprobar con dos bucles for
-		return null;
+	public Estacion[] correspondenciaLineas(Linea l1, Linea l2) {
+		if (l1==null || l2==null)
+			throw new IllegalArgumentException();
+		return l1.getCorrespondencias(l2);
 	}
 
 	/**
@@ -110,7 +156,12 @@ public class Red {
 	 * @throws {@code IllegalArgumentException} si una o ambas estaciones introducidas es nula.
 	 */
 	public Linea conexionSinTransbordo(Estacion e, Estacion e2) {
-		// TODO Comprobar con un bucle for sobre las lineas si existe una linea con las dos estaciones.
+		if(e==null || e2==null)
+			throw new IllegalArgumentException();
+		for(int i=0;i<lineas.size();i++) {
+			if(lineas.get(i).contieneEstacion(e) && lineas.get(i).contieneEstacion(e2))
+				return lineas.get(i);
+		}
 		return null;
 	}
 
@@ -122,9 +173,34 @@ public class Red {
 	 * @throws {@code IllegalArgumentException} si una o ambas estaciones introducidas son nulas.
 	 */
 	public Estacion[] conexionConTransbordo(Estacion e, Estacion e2) {
-		// TODO Comprueba que no hay conexion directa. Buscar lineas con estacion e y otras con estacion e2.
-		// Utilizar funcion recursiva aparte para obtener el array.
-		return null;
+		if(e==null || e2==null)
+			throw new IllegalArgumentException();
+		Estacion[] resultado = new Estacion[3];
+		ArrayList<Linea> l1 = new ArrayList<>();
+		ArrayList<Linea> l2 = new ArrayList<>();
+		for(int i=0;i<lineas.size();i++) {
+			if (lineas.get(i).contieneEstacion(e)) {
+				l1.add(lineas.get(i));
+			}
+		}
+		for(int j=0;j<lineas.size();j++) {
+			if (lineas.get(j).contieneEstacion(e2)) {
+				l2.add(lineas.get(j));
+				break;
+			}
+		}
+		for(int i=0;i<l1.size();i++) {
+			for (int j=0;j<l2.size();j++) {
+				if(l1.get(i).hayCorrespondencia(l2.get(j))) {
+					resultado[0]=e;
+					resultado[1]=l1.get(i).getCorrespondencias(l2.get(j))[0];
+					resultado[2]=e2;
+					return resultado;
+				}
+					
+			}
+		}
+		return resultado;
 	}
 
 	/**
@@ -133,8 +209,20 @@ public class Red {
 	 * @return {@code Estacion} más próxima a las coordenadas introducidas.
 	 */
 	public Estacion getEstacionMasCercana(CoordenadasGPS gps) {
-		// Por cada linea obtener la más cercana. De esas elegir la más cercana. Utilizar funcion extra para producto cartesiano.
-		return null;
+		Estacion resultado=lineas.get(0).getEstaciones(true)[0];
+		for(int i=0;i<lineas.size();i++) {
+			Estacion[] estacionesE = lineas.get(i).getEstaciones(true);
+			Estacion[] estacionesS = lineas.get(i).getEstaciones(false);
+			for(int j=0;j<estacionesE.length;j++) {
+				if(gps.getDistanciaA(estacionesE[j].getCoordenadasGPS()[0])<gps.getDistanciaA(resultado.getCoordenadasGPS()[0])) {
+					resultado=estacionesE[j];
+				}
+				if(gps.getDistanciaA(estacionesS[j].getCoordenadasGPS()[0])<gps.getDistanciaA(resultado.getCoordenadasGPS()[0])) {
+					resultado=estacionesS[j];
+				}
+			}
+		}
+		return resultado;
 	}
 
 }

@@ -164,7 +164,7 @@ public class RedTDDTest {
 		replay(l2);
 		ArrayList<Estacion> eal = new ArrayList<>();
 		eal.add(e);
-		assertArrayEquals(eal.toArray(),r.correspondenciaLineas(l1,l2).toArray());
+		assertArrayEquals(eal.toArray(),r.correspondenciaLineas(l1,l2));
 	}
 	
 	@Tag("TDD")
