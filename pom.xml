@@ -20,19 +20,13 @@
 		<profile>
 			<id>allTests</id>
 			<properties>
-				<groups>TDD|Noticia|Boletin|BlackBoxTestFirst|Isolation|WhiteBox|Sequence</groups>
+				<groups>TDD|Red|BlackBoxTestFirst|Isolation|WhiteBox|Sequence</groups>
 			</properties>
 		</profile>
 		<profile>
-			<id>soloNoticia</id>
+			<id>red</id>
 			<properties>
-				<groups>Noticia&amp;TDD</groups>
-			</properties>
-		</profile>
-		<profile>
-			<id>soloBoletin</id>
-			<properties>
-				<groups>Boletin&amp;TDD</groups>
+				<groups>Red&amp;TDD</groups>
 			</properties>
 		</profile>
 		<profile>
