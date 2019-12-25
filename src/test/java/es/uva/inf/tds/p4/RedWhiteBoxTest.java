@@ -20,31 +20,22 @@ public class RedWhiteBoxTest {
 
 	@Mock
 	private Estacion e;
+	@Mock private Estacion e2;
 
 	private Red r;
-	private int num;
-	private String color;
-	@Mock
-	private CoordenadasGPS cgps;
-	private CoordenadasGPS[] argps;
 
 	@BeforeEach
 	public void setUp() {
 		l1=createMock(Linea.class);
 		l2=createMock(Linea.class);
-		e=createMock(Estacion.class);
+		e=null;
+		e2=null;
 		
 		ArrayList<Linea> al = new ArrayList<>();
 		al.add(l1);
 		al.add(l2);
 		
 		r = new Red(al);
-		num = 1;
-		color = "Red";
-		cgps= createMock(CoordenadasGPS.class);
-				//new CoordenadasGPS(10.0,-1.0);
-		argps= new CoordenadasGPS[1];
-		argps[0]=cgps;
 	}
 
 	@Tag("WhiteBox")
@@ -60,8 +51,6 @@ public class RedWhiteBoxTest {
 	@Tag("WhiteBox")
 	@Test
 	public void conexionSinTransbordoAmbasNulas() {
-		e=null;
-		Estacion e2=null;
 		assertThrows(IllegalArgumentException.class, () -> {
 			r.conexionSinTransbordo(e2, e2);
 		});
@@ -70,8 +59,6 @@ public class RedWhiteBoxTest {
 	@Tag("WhiteBox")
 	@Test
 	public void conexionConTransbordoAmbasNulas() {
-		e=null;
-		Estacion e2=null;
 		assertThrows(IllegalArgumentException.class, () -> {
 			r.conexionConTransbordo(e2, e2);
 		});
@@ -81,7 +68,6 @@ public class RedWhiteBoxTest {
 	public void tearDown() {
 		l1=null;
 		l2=null;
-		e=null;
 	}
 
 }

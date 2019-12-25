@@ -186,7 +186,6 @@ public class Red {
 		for(int j=0;j<lineas.size();j++) {
 			if (lineas.get(j).contieneEstacion(e2)) {
 				l2.add(lineas.get(j));
-				break;
 			}
 		}
 		for(int i=0;i<l1.size();i++) {

@@ -81,8 +81,6 @@ public class RedSequenceTest {
 		replay(l2);
 		
 		Red r = new Red(al);
-		int num = 1;
-		String color = "Red";
 		CoordenadasGPS cgps = createMock(CoordenadasGPS.class);
 		CoordenadasGPS[] argps = new CoordenadasGPS[1];
 		argps[0]=cgps;

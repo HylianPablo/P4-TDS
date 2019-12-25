@@ -21,10 +21,12 @@ public class RedTDDTest {
 	
 	@Mock
 	private Estacion e;
+	@Mock
+	private Estacion e2;
+	@Mock
+	private Estacion e3;
 	
 	private Red r;
-	private int num;
-	private String color;
 	@Mock
 	private CoordenadasGPS cgps;
 	private CoordenadasGPS[] argps;
@@ -34,14 +36,25 @@ public class RedTDDTest {
 		l1=createMock(Linea.class);
 		l2=createMock(Linea.class);
 		e=createMock(Estacion.class);
+		e2=createMock(Estacion.class);
+		e3=createMock(Estacion.class);
+		
+		expect(l1.getNumero()).andReturn(1).anyTimes();
+		expect(l1.getColor()).andReturn("Red").anyTimes();
+		expect(l2.getNumero()).andReturn(2).anyTimes();
+		expect(l2.getColor()).andReturn("Blue").anyTimes();
+		expect(l1.contieneEstacion(e)).andReturn(true).anyTimes();
+		expect(l2.contieneEstacion(e)).andReturn(false).anyTimes();
+		expect(l1.contieneEstacion(e2)).andReturn(true).anyTimes();
+		expect(l1.contieneEstacion(e3)).andReturn(false).anyTimes();
+		expect(l2.contieneEstacion(e2)).andReturn(true).anyTimes();
+		expect(l2.contieneEstacion(e3)).andReturn(true).anyTimes();
 		
 		ArrayList<Linea> al = new ArrayList<>();
 		al.add(l1);
 		al.add(l2);
 		
 		r = new Red(al);
-		num = 1;
-		color = "Red";
 		cgps= createMock(CoordenadasGPS.class);
 				//new CoordenadasGPS(10.0,-1.0);
 		argps= new CoordenadasGPS[1];
@@ -72,9 +85,8 @@ public class RedTDDTest {
 	@Tag("Isolation")
 	@Test
 	public void getLineaNumber() {
-		expect(l1.getNumero()).andReturn(1).anyTimes();
 		replay(l1);
-		assertEquals(l1, r.getLinea(num));
+		assertEquals(l1, r.getLinea(1));
 		verify(l1);
 	}
 	
@@ -82,9 +94,8 @@ public class RedTDDTest {
 	@Tag("Isolation")
 	@Test
 	public void getLineaColor() {
-		expect(l1.getColor()).andReturn("Red").anyTimes();
 		replay(l1);
-		assertEquals(l1, r.getLinea(color));
+		assertEquals(l1, r.getLinea("Red"));
 		verify(l1);
 	}
 	
@@ -93,10 +104,6 @@ public class RedTDDTest {
 	@Test
 	public void addLineaRemoveLinea() {
 		Linea l3 = createMock(Linea.class);
-		expect(l1.getNumero()).andReturn(1).anyTimes();
-		expect(l1.getColor()).andReturn("Red").anyTimes();
-		expect(l2.getNumero()).andReturn(2).anyTimes();
-		expect(l2.getColor()).andReturn("Blue").anyTimes();
 		expect(l3.getNumero()).andReturn(3).anyTimes();
 		expect(l3.getColor()).andReturn("Green").anyTimes();
 		replay(l1);
@@ -134,12 +141,7 @@ public class RedTDDTest {
 	@Tag("Isolation")
 	@Test
 	public void getInfoLineasEstacion(){
-		expect(l1.contieneEstacion(e)).andReturn(true).anyTimes();
-		expect(l2.contieneEstacion(e)).andReturn(false).anyTimes();
-		expect(l1.getNumero()).andReturn(1).anyTimes();
-		expect(l1.getColor()).andReturn("Red").anyTimes();
-		expect(l2.getNumero()).andReturn(2).anyTimes();
-		expect(l2.getColor()).andReturn("Blue").anyTimes();
+
 		replay(l1);
 		replay(l2);
 		ArrayList<Linea> eal = new ArrayList<>();
@@ -200,9 +202,7 @@ public class RedTDDTest {
 	@Tag("Isolation")
 	@Test
 	public void conexionSinTransbordo() {
-		Estacion e2 = createMock(Estacion.class);
-		expect(l1.contieneEstacion(e)).andReturn(true).anyTimes();
-		expect(l1.contieneEstacion(e2)).andReturn(true).anyTimes();
+
 		replay(l1);
 		assertEquals(l1, r.conexionSinTransbordo(e,e2));
 		verify(l1);
@@ -222,19 +222,11 @@ public class RedTDDTest {
 	@Tag("Isolation")
 	@Test
 	public void conexionConTransbordo() {
-		Estacion e2 = createMock(Estacion.class);
-		Estacion e3 = createMock(Estacion.class);
 		Estacion[] ear = new Estacion[1];
 		ear[0]=e2;
-		expect(l1.contieneEstacion(e)).andReturn(true).anyTimes();
-		expect(l1.contieneEstacion(e2)).andReturn(true).anyTimes();
-		expect(l1.contieneEstacion(e3)).andReturn(false).anyTimes();
+
 		expect(l1.hayCorrespondencia(l2)).andReturn(true).anyTimes();
 		expect(l1.getCorrespondencias(l2)).andReturn(ear).anyTimes();
-		expect(l2.contieneEstacion(e)).andReturn(false).anyTimes();
-		expect(l2.contieneEstacion(e2)).andReturn(true).anyTimes();
-		expect(l2.contieneEstacion(e3)).andReturn(true).anyTimes();
-		
 		replay(l1);
 		replay(l2);
 		
@@ -262,17 +254,15 @@ public class RedTDDTest {
 	@Tag("Isolation")
 	@Test
 	public void estacionMasCercana() {
-		Estacion e0=createMock(Estacion.class);
-		Estacion[] est0 = new Estacion[1];
-		est0[0]=e0;
+		Estacion[] est3 = new Estacion[1];
+		est3[0]=e3;
 		
-		CoordenadasGPS cgps0= createMock(CoordenadasGPS.class);
-		CoordenadasGPS[] argps0= new CoordenadasGPS[1];
-		argps0[0]=cgps0;
+		CoordenadasGPS cgps3= createMock(CoordenadasGPS.class);
+		CoordenadasGPS[] argps3= new CoordenadasGPS[1];
+		argps3[0]=cgps3;
 		
 		Estacion[] est = new Estacion[1];
 		est[0]=e;
-		Estacion e2=createMock(Estacion.class);
 		Estacion[] est2 = new Estacion[1];
 		est2[0]=e2;
 		
@@ -282,37 +272,37 @@ public class RedTDDTest {
 		
 		CoordenadasGPS gps1 = createMock(CoordenadasGPS.class);
 		expect(gps1.getDistanciaA(cgps)).andReturn(1.0).anyTimes();
-		expect(gps1.getDistanciaA(cgps0)).andReturn(10.0).anyTimes();
+		expect(gps1.getDistanciaA(cgps3)).andReturn(10.0).anyTimes();
 		expect(gps1.getDistanciaA(cgps2)).andReturn(100.0).anyTimes();
 		
-		expect(e0.getCoordenadasGPS()).andReturn(argps0).anyTimes();
+		expect(e3.getCoordenadasGPS()).andReturn(argps3).anyTimes();
 		expect(e.getCoordenadasGPS()).andReturn(argps).anyTimes();
 		expect(e2.getCoordenadasGPS()).andReturn(argps2).anyTimes();
-		expect(l1.getEstaciones(false)).andReturn(est0).anyTimes();
-		expect(l1.getEstaciones(true)).andReturn(est).anyTimes();
+		expect(l1.getEstaciones(false)).andReturn(est).anyTimes();
+		expect(l1.getEstaciones(true)).andReturn(est3).anyTimes();
 		expect(l2.getEstaciones(true)).andReturn(est2).anyTimes();
 		expect(l2.getEstaciones(false)).andReturn(est2).anyTimes();
 		
 		replay(e);
 		replay(e2);
-		replay(e0);
+		replay(e3);
 		replay(l1);
 		replay(l2);
-		
-				//new CoordenadasGPS(5.0,-1.0);
 		replay(cgps);
 		replay(cgps2);
-		replay(cgps0);
+		replay(cgps3);
 		replay(gps1);
+		
 		assertEquals(e,r.getEstacionMasCercana(gps1));
+		
 		verify(e);
 		verify(e2);
-		verify(e0);
+		verify(e3);
 		verify(l1);
 		verify(l2);
 		verify(cgps);
 		verify(cgps2);
-		verify(cgps0);
+		verify(cgps3);
 		verify(gps1);
 	}
 	
