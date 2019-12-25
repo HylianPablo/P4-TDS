@@ -26,6 +26,7 @@ public class RedBlackBoxTest {
 	private Red r;
 	private int num;
 	private String color;
+	@Mock
 	private CoordenadasGPS cgps;
 	private CoordenadasGPS[] argps;
 
@@ -42,8 +43,9 @@ public class RedBlackBoxTest {
 		r = new Red(al);
 		num = 1;
 		color = "Red";
-		cgps= new CoordenadasGPS(10.0,-1.0);
-		argps= new CoordenadasGPS[0];
+		cgps= createMock(CoordenadasGPS.class);
+				//new CoordenadasGPS(10.0,-1.0);
+		argps= new CoordenadasGPS[1];
 		argps[0]=cgps;
 	}
 	
@@ -67,7 +69,6 @@ public class RedBlackBoxTest {
 		replay(l1);
 		replay(l2);
 		assertNull(r.getLinea(3));
-		fail("UNTIL GREEN PHASE");
 		verify(l1);
 		verify(l2);
 	}
@@ -81,7 +82,6 @@ public class RedBlackBoxTest {
 		replay(l1);
 		replay(l2);
 		assertNull(r.getLinea("Green"));
-		fail("UNTIL GREEN PHASE");
 		verify(l1);
 		verify(l2);
 	}
@@ -168,7 +168,6 @@ public class RedBlackBoxTest {
 		replay(l1);
 		
 		assertNull(r.conexionSinTransbordo(e, e2));
-		fail("UNTIL GREEN PHASE");
 		verify(l1);
 	}
 	
@@ -179,11 +178,13 @@ public class RedBlackBoxTest {
 		Estacion e2 = createMock(Estacion.class);
 		expect(l1.contieneEstacion(e)).andReturn(true).anyTimes();
 		expect(l2.contieneEstacion(e2)).andReturn(true).anyTimes();
+		expect(l1.contieneEstacion(e2)).andReturn(false).anyTimes();
+		expect(l2.contieneEstacion(e)).andReturn(false).anyTimes();
+		expect(l1.hayCorrespondencia(l2)).andReturn(false).anyTimes();
 		replay(l1);
 		replay(l2);
 		
-		assertNull(r.conexionConTransbordo(e, e2));
-		fail("UNTIL GREEN PHASE");
+		assertNull(r.conexionConTransbordo(e, e2)[0]);
 		verify(l1);
 		verify(l2);
 	}

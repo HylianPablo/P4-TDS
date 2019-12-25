@@ -56,19 +56,45 @@ public class RedSequenceTest {
 		expect(l2.contieneEstacion(e)).andReturn(true).anyTimes();
 		expect(l2.contieneEstacion(e2)).andReturn(false).anyTimes();
 		
+		Estacion[] are = new Estacion[1];
+		are[0]=e;
+		
+		Estacion[] estl1 = new Estacion[3];
+		estl1[0]=e;
+		estl1[1]=e2;
+		estl1[2]=e3;
+		Estacion[] estl2 = new Estacion[3];
+		estl2[0]=e;
+		estl2[1]=e2;
+		estl2[2]=e4;
+		
+		expect(l1.hayCorrespondencia(l2)).andReturn(true).anyTimes();
+		expect(l1.getCorrespondencias(l2)).andReturn(are).anyTimes();
+		
+		expect(l1.getEstaciones(true)).andReturn(estl1).anyTimes();
+		expect(l1.getEstaciones(false)).andReturn(estl1).anyTimes();
+		
+		expect(l2.getEstaciones(true)).andReturn(estl2).anyTimes();
+		expect(l2.getEstaciones(false)).andReturn(estl2).anyTimes();
+		
 		replay(l1);
 		replay(l2);
 		
 		Red r = new Red(al);
 		int num = 1;
 		String color = "Red";
-		CoordenadasGPS cgps = new CoordenadasGPS(10.0,-1.0);
+		CoordenadasGPS cgps = createMock(CoordenadasGPS.class);
 		CoordenadasGPS[] argps = new CoordenadasGPS[1];
 		argps[0]=cgps;
 		
-		CoordenadasGPS cgps2 = new CoordenadasGPS(100.0,-1.0);
+		CoordenadasGPS cgps2 = createMock(CoordenadasGPS.class);
 		CoordenadasGPS[] argps2 = new CoordenadasGPS[1];
 		argps2[0]=cgps2;
+		
+		expect(cgps2.getDistanciaA(cgps)).andReturn(100.0).anyTimes();
+		expect(cgps2.getDistanciaA(cgps2)).andReturn(1.0).anyTimes();
+		
+		replay(cgps2);
 		
 		expect(e.getCoordenadasGPS()).andReturn(argps).anyTimes();
 		expect(e2.getCoordenadasGPS()).andReturn(argps).anyTimes();
@@ -79,6 +105,8 @@ public class RedSequenceTest {
 		replay(e2);
 		replay(e3);
 		replay(e4);
+		
+		
 		
 		l3 = createMock(Linea.class);
 		expect(l3.getNumero()).andReturn(3).anyTimes();
@@ -91,9 +119,6 @@ public class RedSequenceTest {
 		assertEquals(l2,r.getLinea(2));
 		r.removeLinea(l3);
 		assertSame(2,r.getArrayLineas().length);
-		
-		Estacion[] are = new Estacion[1];
-		are[0]=e;
 		
 		assertArrayEquals(are,r.correspondenciaLineas(l1, l2));
 		
@@ -124,6 +149,7 @@ public class RedSequenceTest {
 		verify(e2);
 		verify(e3);
 		verify(e4);
+		verify(cgps2);
 	}
 	
 

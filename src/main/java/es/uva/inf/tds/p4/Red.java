@@ -90,12 +90,12 @@ public class Red {
 	 * @throws {@code IllegalArgumentException} en el caso de que la línea a borrar no exista en la red o la línea a borrar sea nula.
 	 */
 	public void removeLinea(Linea l) {
-		if(lineas.size()==2) 
-			throw new IllegalStateException();
 		if(l==null) 
 			throw new IllegalArgumentException();
 		if(!lineas.contains(l))
 			throw new IllegalArgumentException();
+		if(lineas.size()==2) 
+			throw new IllegalStateException();
 		lineas.remove(l);
 	}
 
@@ -169,7 +169,7 @@ public class Red {
 	 * Determina si existe una conexión indirecta entre las dos estaciones introducidas por parámetro.
 	 * @param e {@code Estacion} a comprobar si existe conexión indirecta.
 	 * @param e2 {@code Estacion} a comprobar si existe conexión indirecta.
-	 * @return Lista de estaciones, incluidas inicial y final, que conectan las dos estaciones introducidas por parámetro. Devolverá array nulo en caso de no existir conexión indirecta.
+	 * @return Lista de estaciones, incluidas inicial y final, que conectan las dos estaciones introducidas por parámetro. Devolverá array vacío en caso de no existir conexión indirecta.
 	 * @throws {@code IllegalArgumentException} si una o ambas estaciones introducidas son nulas.
 	 */
 	public Estacion[] conexionConTransbordo(Estacion e, Estacion e2) {
@@ -209,7 +209,8 @@ public class Red {
 	 * @return {@code Estacion} más próxima a las coordenadas introducidas.
 	 */
 	public Estacion getEstacionMasCercana(CoordenadasGPS gps) {
-		Estacion resultado=lineas.get(0).getEstaciones(true)[0];
+		Estacion[] res=lineas.get(0).getEstaciones(true);
+		Estacion resultado=res[0];
 		for(int i=0;i<lineas.size();i++) {
 			Estacion[] estacionesE = lineas.get(i).getEstaciones(true);
 			Estacion[] estacionesS = lineas.get(i).getEstaciones(false);
