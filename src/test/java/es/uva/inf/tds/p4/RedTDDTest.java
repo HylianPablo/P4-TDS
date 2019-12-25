@@ -46,6 +46,7 @@ public class RedTDDTest {
 		argps[0]=cgps;
 	}
 	
+	@Tag("TDD")
 	@Test
 	public void constructor() {
 		ArrayList<Linea> al = new ArrayList<>();
@@ -56,6 +57,7 @@ public class RedTDDTest {
 		fail();
 	}
 	
+	@Tag("TDD")
 	@Test
 	public void constructorNull() {
 		ArrayList<Linea> al = null;
@@ -88,7 +90,7 @@ public class RedTDDTest {
 	@Tag("TDD")
 	@Tag("Isolation")
 	@Test
-	public void addLinea() {
+	public void addLineaRemoveLinea() {
 		Linea l3 = createMock(Linea.class);
 		r.addLinea(l3);
 		assertSame(3,r.getArrayLineas().length);
@@ -219,7 +221,7 @@ public class RedTDDTest {
 		lal.add(e2);
 		lal.add(e3);
 		
-		assertArrayEquals(lal.toArray(), r.conexionConTransbordo(e,e3).toArray());
+		assertArrayEquals(lal.toArray(), r.conexionConTransbordo(e,e3));
 		verify(l1);
 		verify(l2);
 	}

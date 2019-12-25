@@ -11,28 +11,28 @@ public class Red {
 	 * @throws {@code IllegalArgumentException} si el número de líneas iniciales es menor que dos.
 	 */
 	public Red(ArrayList<Linea> al) {
-		// TODO Auto-generated constructor stub
+		// Constructor a través de un arraylist
 	}
 
 	/**
 	 * Devuelve una línea de metro a partir de su número.
 	 * @param i Número entero que representa el número de una línea.
-	 * @return {@code Linea} correspondiente al número introducido.
+	 * @return {@code Linea} correspondiente al número introducido. De no existir una línea con ese número, devuelve nulo.
 	 * @throws {@code IllegalArgumentException} en caso de introducir un número nulo.
 	 */
 	public Linea getLinea(int i) {
-		// TODO Auto-generated method stub
+		// Recorrer arraylist buscando numero
 		return null;
 	}
 
 	/**
 	 * Devuelve una línea de metro a partir de su color.
-	 * @param color Cadena de caracteres que representa el color de la línea de metro.
+	 * @param color Cadena de caracteres que representa el color de la línea de metro. De no existir una línea con ese color, devuelve nulo.
 	 * @return {@code Linea} correspondiente al color introducido.
 	 * @throws {@code IllegalArgumentException} en caso de introducir un color nulo.
 	 */
 	public Linea getLinea(String color) {
-		// TODO Auto-generated method stub
+		// Recorrer arraylist buscando color
 		return null;
 	}
 
@@ -40,9 +40,10 @@ public class Red {
 	 * Añade una nueva línea de metro a la red. Dicha línea debe tener un nombre y color únicos en la red.
 	 * @param l {@code Linea} a añadir a la red.
 	 * @throws {@code IllegalArgumentException} en el caso de introducir una línea nula.
+	 * @throws {@code IllegalArgumentException} en el caso de introducir una linea con número o color ya existentes en la red.
 	 */
 	public void addLinea(Linea l) {
-		// TODO Auto-generated method stub
+		// añadir con add
 		
 	}
 
@@ -51,7 +52,7 @@ public class Red {
 	 * @return {@code Array} de {@code Linea} que representa el conjunto de líneas de la red.
 	 */
 	public Linea[] getArrayLineas() {
-		// TODO Auto-generated method stub
+		// devolver toArray
 		return null;
 	}
 
@@ -62,7 +63,7 @@ public class Red {
 	 * @throws {@code IllegalArgumentException} en el caso de que la línea a borrar no exista en la red.
 	 */
 	public void removeLinea(Linea l) {
-		// TODO Auto-generated method stub
+		// eliminar con remove
 		
 	}
 
@@ -73,7 +74,7 @@ public class Red {
 	 * @throws {@code IllegalArgumentException} si la estación introducida es nula.
 	 */
 	public ArrayList<Linea> getLineasPorEstacion(Estacion e) {
-		// TODO Auto-generated method stub
+		// Recorrer lineas y añadir al resultado las que tengan a la estacion
 		return null;
 	}
 
@@ -84,7 +85,8 @@ public class Red {
 	 * @throws {@code IllegalArgumentException} si la estación introducida es nula.
 	 */
 	public ArrayList<String> getInfoLineasPorEstacion(Estacion e) {
-		// TODO Auto-generated method stub
+		// TODO Recorrer lineas y añadir al resultado un string compuesto por nombre y color por cada linea que tenga a la estacion
+		// Utilizar primero metodo anterior
 		return null;
 	}
 
@@ -96,7 +98,7 @@ public class Red {
 	 * @throws {@code IllegalArgumentException} si una o ambas líneas introducidas es nula.
 	 */
 	public ArrayList<Estacion> correspondenciaLineas(Linea l1, Linea l2) {
-		// TODO Auto-generated method stub
+		// TODO Comprobar con dos bucles for
 		return null;
 	}
 
@@ -108,7 +110,7 @@ public class Red {
 	 * @throws {@code IllegalArgumentException} si una o ambas estaciones introducidas es nula.
 	 */
 	public Linea conexionSinTransbordo(Estacion e, Estacion e2) {
-		// TODO Auto-generated method stub
+		// TODO Comprobar con un bucle for sobre las lineas si existe una linea con las dos estaciones.
 		return null;
 	}
 
@@ -116,11 +118,12 @@ public class Red {
 	 * Determina si existe una conexión indirecta entre las dos estaciones introducidas por parámetro.
 	 * @param e {@code Estacion} a comprobar si existe conexión indirecta.
 	 * @param e2 {@code Estacion} a comprobar si existe conexión indirecta.
-	 * @return Lista de estaciones, incluidas inicial y final, que conectan las dos estaciones introducidas por parámetro.
+	 * @return Lista de estaciones, incluidas inicial y final, que conectan las dos estaciones introducidas por parámetro. Devolverá array nulo en caso de no existir conexión indirecta.
 	 * @throws {@code IllegalArgumentException} si una o ambas estaciones introducidas son nulas.
 	 */
-	public ArrayList<Estacion> conexionConTransbordo(Estacion e, Estacion e2) {
-		// TODO Auto-generated method stub
+	public Estacion[] conexionConTransbordo(Estacion e, Estacion e2) {
+		// TODO Comprueba que no hay conexion directa. Buscar lineas con estacion e y otras con estacion e2.
+		// Utilizar funcion recursiva aparte para obtener el array.
 		return null;
 	}
 
@@ -130,7 +133,7 @@ public class Red {
 	 * @return {@code Estacion} más próxima a las coordenadas introducidas.
 	 */
 	public Estacion getEstacionMasCercana(CoordenadasGPS gps) {
-		// TODO Auto-generated method stub
+		// Por cada linea obtener la más cercana. De esas elegir la más cercana. Utilizar funcion extra para producto cartesiano.
 		return null;
 	}
 
