@@ -2,15 +2,21 @@ package es.uva.inf.tds.p4;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import org.easymock.Mock;
+import org.json.JSONException;
+
 import static org.easymock.EasyMock.*;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 
 public class RedTDDTest {
 
@@ -304,6 +310,17 @@ public class RedTDDTest {
 		verify(cgps2);
 		verify(cgps3);
 		verify(gps1);
+	}
+	
+	@Test
+	public void readFromUpdateToJson() throws JSONException {
+		Linea l3 = createMock(Linea.class);
+		Path pathIn = Paths.get("json","dummy.json");
+		r.loadFrom(pathIn);
+		JSONAssert.assertEquals("{\"name\":\"pepe\"}", pathIn.toFile().toString(), JSONCompareMode.STRICT);
+		r.addLinea(l3);
+		JSONAssert.assertEquals("{\"name\":\"pepe\"}", pathIn.toFile().toString(), JSONCompareMode.STRICT);
+		
 	}
 
 	@AfterEach

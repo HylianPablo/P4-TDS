@@ -1,8 +1,14 @@
 package es.uva.inf.tds.p4;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Red de líneas de metro. Una red está compuesta por al menos dos líneas de metro, identificadas unívocamente por un coloy y un número.
+ * @author pamarti
+ *
+ */
 public class Red {
 
 	private ArrayList<Linea> lineas;
@@ -265,6 +271,22 @@ public class Red {
 			}
 		}
 		return resultado;
+	}
+
+	/**
+	 * Lee un archivo JSON y lo transforma a una red de líneas de metro.
+	 * @param pathIn Ruta al fichero de entrada que representa la red de líneas de metro.
+	 */
+	public void loadFrom(Path pathIn) {
+		
+	}
+
+	/**
+	 * Exporta la red de líneas de metro a un archivo JSON.
+	 * @param pathOut Ruta al fichero de salida que representará la red de líneas de metro.
+	 */
+	public void updateTo(Path pathOut) {
+		
 	}
 
 }
