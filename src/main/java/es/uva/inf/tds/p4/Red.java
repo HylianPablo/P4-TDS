@@ -1,20 +1,16 @@
 package es.uva.inf.tds.p4;
 
-import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.StringReader;
 import javax.json.Json;
 import javax.json.JsonException;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.json.JsonReaderFactory;
-import javax.json.stream.JsonParsingException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -311,7 +307,7 @@ public class Red {
 		}
 
 		}catch(JsonException | IOException ee) {
-			ee.printStackTrace();
+			ee.getMessage();
 		}
 		return new Red(getting); 
 	}
@@ -347,9 +343,8 @@ public class Red {
 		
 		
 		}catch(JSONException | IOException ee) {
-			
+			ee.getMessage();
 		}
-		System.out.println(main.toString());
 		return main.toString();
 	}
 

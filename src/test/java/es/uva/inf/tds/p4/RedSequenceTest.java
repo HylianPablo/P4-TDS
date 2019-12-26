@@ -5,10 +5,14 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 
 import org.easymock.Mock;
+import org.json.JSONException;
+
 import static org.easymock.EasyMock.*;
 
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 
 public class RedSequenceTest {
 	@Mock
@@ -29,7 +33,7 @@ public class RedSequenceTest {
 	@Tag("Sequence")
 	@Tag("Isolation")
 	@Test
-	public void Sequence() {
+	public void Sequence() throws JSONException {
 		l1 = createMock(Linea.class);
 		l2 = createMock(Linea.class);
 		e = createMock(Estacion.class);
@@ -109,7 +113,15 @@ public class RedSequenceTest {
 		expect(l3.getColor()).andReturn("Green").anyTimes();
 		replay(l3);
 
+		ArrayList<Linea> arr2 = new ArrayList<>();
+		arr2.add(l1);
+		arr2.add(l2);
+		Red r2 = new Red(arr2);
+		String in = "dummy.json";
+		assertEquals(r2.getArrayLineas().length,r.loadFrom(in).getArrayLineas().length);
+		
 		r.addLinea(l3);
+		JSONAssert.assertEquals("{ \"lineas\" : [{\"linea0\":[{\"num\" : 1}, {\"color\" : \"Red\"}]}, {\"linea1\":[{\"num\" : 2}, {\"color\" : \"Blue\"}]}, {\"linea2\":[{\"num\" : 3}, {\"color\" : \"Green\"}]}]} ] }", r.updateTo("out.json"), JSONCompareMode.STRICT);	
 		assertSame(3, r.getArrayLineas().length);
 		assertEquals(l3, r.getLinea("Green"));
 		assertEquals(l2, r.getLinea(2));

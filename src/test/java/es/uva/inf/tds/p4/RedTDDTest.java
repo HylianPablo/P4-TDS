@@ -2,8 +2,6 @@ package es.uva.inf.tds.p4;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import org.easymock.Mock;
@@ -312,6 +310,8 @@ public class RedTDDTest {
 		verify(gps1);
 	}
 	
+	@Tag("Isolation")
+	@Tag("TDD")
 	@Test
 	public void readFromUpdateToJson() throws JSONException {
 		Linea l3 = createMock(Linea.class);

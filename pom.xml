@@ -6,7 +6,7 @@
 	<artifactId>p4</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	<name>p4</name>
+	<name>2019-2020 practica 4 de TDS del alumno pamarti</name>
 	<url>http://maven.apache.org</url>
 	<properties>
 		<maven.compiler.source>1.8</maven.compiler.source>
@@ -15,6 +15,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<junit.jupiter.version>5.5.2</junit.jupiter.version>
 		<junit.platform.version>1.5.2</junit.platform.version>
+		<sonar.exclusions>./src/main/java/es/uva/inf/tds/p4/CoordenadasGPS.java, ./src/main/java/es/uva/inf/tds/p4/Linea.java, ./src/main/java/es/uva/inf/tds/p4/Estacion.java</sonar.exclusions>
 	</properties>
 	<profiles>
 		<profile>
@@ -78,6 +79,11 @@
 			<artifactId>easymock</artifactId>
 			<version>4.1</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.skyscreamer</groupId>
+			<artifactId>jsonassert</artifactId>
+			<version>1.5.0</version>
 		</dependency>
 	</dependencies>
 	<build>
