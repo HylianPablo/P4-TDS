@@ -4,6 +4,8 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
@@ -292,47 +294,54 @@ public class Red {
 	 * @param pathIn Ruta al fichero de entrada que representa la red de líneas de metro.
 	 * @throws JSONException 
 	 */
-	public void loadFrom(String in){
+	public Red loadFrom(String in){
+		String top = "lineas";
 		JsonReaderFactory factory = Json.createReaderFactory(null);
-		try(JsonReader reader = factory.createReader(new StringReader(in));) {
-		
-		JsonObject jsonobject = reader.readObject();
 		ArrayList<Linea> getting=new ArrayList<>(); 
-		for(int i=0;i<jsonobject.getJsonArray("lineas").size();i+=2) {
+		try(JsonReader reader = factory.createReader(new FileReader(new File(in)));) {
+		JsonObject jsonobject = reader.readObject();
+		for(int i=0;i<jsonobject.getJsonArray(top).size();i++) {
 			String linea = "linea"+i;
-			JsonObject job1 = jsonobject.getJsonArray("lineas").getJsonObject(i).getJsonArray(linea).getJsonObject(0);
+			JsonObject job1 = jsonobject.getJsonArray(top).getJsonObject(i).getJsonArray(linea).getJsonObject(0);
 			int n = job1.getInt("num");
-			JsonObject job2 = jsonobject.getJsonArray("lineas").getJsonObject(i).getJsonArray(linea).getJsonObject(1);
+			JsonObject job2 = jsonobject.getJsonArray(top).getJsonObject(i).getJsonArray(linea).getJsonObject(1);
 			String s = job2.getString("color");
 			Linea l = new Linea(n,s);
-			getting.add(l);
-			
+			getting.add(l);		
 		}
 
-		}catch(JsonException ee) {
+		}catch(JsonException | IOException ee) {
 			ee.printStackTrace();
 		}
+		return new Red(getting); 
 	}
 
 	/**
 	 * Exporta la red de líneas de metro a un archivo JSON.
 	 * @param pathOut Ruta al fichero de salida que representará la red de líneas de metro.
 	 */
-	public void updateTo(String pathOut) {
-		try {
+	public String updateTo(String pathOut) {
 		JSONObject main = new JSONObject();
-		JSONObject lineasM = new JSONObject();
-		for(int i=0;i<lineas.size();i++) {
-			JSONObject oMax = new JSONObject();
-			oMax.put("num", lineas.get(i).getNumero());
-			oMax.put("color", lineas.get(i).getColor());
-			String s = "linea"+i;
-			lineasM.put(s, oMax);
-			
-		}
-		main.put("lineas", lineasM);
+		JSONArray arrMain = new JSONArray();
+		try {
 		
-		try(FileWriter file = new FileWriter(pathOut.toString())){
+		for(int i=0;i<lineas.size();i++) {
+			JSONObject lineasM = new JSONObject();
+			JSONArray ja = new JSONArray();
+			JSONObject oMax1 = new JSONObject();
+			JSONObject oMax2 = new JSONObject();
+			oMax1.put("num", lineas.get(i).getNumero());
+			oMax2.put("color", lineas.get(i).getColor());
+			String s = "linea"+i;
+			ja.put(oMax1);
+			ja.put(oMax2);
+			lineasM.put(s, ja);
+			arrMain.put(lineasM);
+		}
+		
+		main.put("lineas", arrMain);
+		
+		try(FileWriter file = new FileWriter(new File(pathOut))){
 			file.write(main.toString());
 		}
 		
@@ -340,6 +349,8 @@ public class Red {
 		}catch(JSONException | IOException ee) {
 			
 		}
+		System.out.println(main.toString());
+		return main.toString();
 	}
 
 }

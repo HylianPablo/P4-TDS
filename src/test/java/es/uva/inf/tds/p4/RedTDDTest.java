@@ -314,17 +314,23 @@ public class RedTDDTest {
 	
 	@Test
 	public void readFromUpdateToJson() throws JSONException {
+		Linea l3 = createMock(Linea.class);
+		expect(l3.getNumero()).andReturn(3).anyTimes();
+		expect(l3.getColor()).andReturn("Green").anyTimes();
 		replay(l1);
 		replay(l2);
-		Linea l3 = createMock(Linea.class);
-		String in = "{ \"lineas\" : [{\"linea0\":[{\"num\" : 1}, {\"color\" : \"Red\"}]} ] }";
-		r.loadFrom(in);
-		JSONAssert.assertEquals("{ \"lineas\" : [{\"linea0\":[{\"num\" : 1}, {\"color\" : \"Red\"}]} ] }", in, JSONCompareMode.STRICT);
-		//r.addLinea(l3);
-		r.updateTo("end.json");
-		JSONAssert.assertEquals("{ \"lineas\" : [{\"linea0\":[{\"num\" : 1}, {\"color\" : \"Red\"}]} ] }", in, JSONCompareMode.STRICT);
+		replay(l3);
+		ArrayList<Linea> arr2 = new ArrayList<>();
+		arr2.add(l1);
+		arr2.add(l2);
+		Red r2 = new Red(arr2);
+		String in = "dummy.json";
+		assertEquals(r2.getArrayLineas().length,r.loadFrom(in).getArrayLineas().length);
+		r.addLinea(l3);
+		JSONAssert.assertEquals("{ \"lineas\" : [{\"linea0\":[{\"num\" : 1}, {\"color\" : \"Red\"}]}, {\"linea1\":[{\"num\" : 2}, {\"color\" : \"Blue\"}]}, {\"linea2\":[{\"num\" : 3}, {\"color\" : \"Green\"}]}]} ] }", r.updateTo("out.json"), JSONCompareMode.STRICT);	
 		verify(l1);
 		verify(l2);
+		verify(l3);
 	}
 
 	@AfterEach
