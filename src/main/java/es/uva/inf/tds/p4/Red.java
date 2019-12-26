@@ -2,7 +2,21 @@ package es.uva.inf.tds.p4;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.StringReader;
+import javax.json.Json;
+import javax.json.JsonException;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
+import javax.json.JsonReaderFactory;
+import javax.json.stream.JsonParsingException;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Red de líneas de metro. Una red está compuesta por al menos dos líneas de metro, identificadas unívocamente por un coloy y un número.
@@ -276,17 +290,56 @@ public class Red {
 	/**
 	 * Lee un archivo JSON y lo transforma a una red de líneas de metro.
 	 * @param pathIn Ruta al fichero de entrada que representa la red de líneas de metro.
+	 * @throws JSONException 
 	 */
-	public void loadFrom(Path pathIn) {
+	public void loadFrom(String in){
+		JsonReaderFactory factory = Json.createReaderFactory(null);
+		try(JsonReader reader = factory.createReader(new StringReader(in));) {
 		
+		JsonObject jsonobject = reader.readObject();
+		ArrayList<Linea> getting=new ArrayList<>(); 
+		for(int i=0;i<jsonobject.getJsonArray("lineas").size();i+=2) {
+			String linea = "linea"+i;
+			JsonObject job1 = jsonobject.getJsonArray("lineas").getJsonObject(i).getJsonArray(linea).getJsonObject(0);
+			int n = job1.getInt("num");
+			JsonObject job2 = jsonobject.getJsonArray("lineas").getJsonObject(i).getJsonArray(linea).getJsonObject(1);
+			String s = job2.getString("color");
+			Linea l = new Linea(n,s);
+			getting.add(l);
+			
+		}
+
+		}catch(JsonException ee) {
+			ee.printStackTrace();
+		}
 	}
 
 	/**
 	 * Exporta la red de líneas de metro a un archivo JSON.
 	 * @param pathOut Ruta al fichero de salida que representará la red de líneas de metro.
 	 */
-	public void updateTo(Path pathOut) {
+	public void updateTo(String pathOut) {
+		try {
+		JSONObject main = new JSONObject();
+		JSONObject lineasM = new JSONObject();
+		for(int i=0;i<lineas.size();i++) {
+			JSONObject oMax = new JSONObject();
+			oMax.put("num", lineas.get(i).getNumero());
+			oMax.put("color", lineas.get(i).getColor());
+			String s = "linea"+i;
+			lineasM.put(s, oMax);
+			
+		}
+		main.put("lineas", lineasM);
 		
+		try(FileWriter file = new FileWriter(pathOut.toString())){
+			file.write(main.toString());
+		}
+		
+		
+		}catch(JSONException | IOException ee) {
+			
+		}
 	}
 
 }

@@ -314,13 +314,17 @@ public class RedTDDTest {
 	
 	@Test
 	public void readFromUpdateToJson() throws JSONException {
+		replay(l1);
+		replay(l2);
 		Linea l3 = createMock(Linea.class);
-		Path pathIn = Paths.get("json","dummy.json");
-		r.loadFrom(pathIn);
-		JSONAssert.assertEquals("{\"name\":\"pepe\"}", pathIn.toFile().toString(), JSONCompareMode.STRICT);
-		r.addLinea(l3);
-		JSONAssert.assertEquals("{\"name\":\"pepe\"}", pathIn.toFile().toString(), JSONCompareMode.STRICT);
-		
+		String in = "{ \"lineas\" : [{\"linea0\":[{\"num\" : 1}, {\"color\" : \"Red\"}]} ] }";
+		r.loadFrom(in);
+		JSONAssert.assertEquals("{ \"lineas\" : [{\"linea0\":[{\"num\" : 1}, {\"color\" : \"Red\"}]} ] }", in, JSONCompareMode.STRICT);
+		//r.addLinea(l3);
+		r.updateTo("end.json");
+		JSONAssert.assertEquals("{ \"lineas\" : [{\"linea0\":[{\"num\" : 1}, {\"color\" : \"Red\"}]} ] }", in, JSONCompareMode.STRICT);
+		verify(l1);
+		verify(l2);
 	}
 
 	@AfterEach
