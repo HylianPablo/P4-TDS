@@ -1,19 +1,19 @@
 MH: 14 horas y 30 minutos. 
 
-Code to test ratio: 2081 (líneas de test) / 277 (líneas de código) -> **ratio 1:7.5** (MAL)   
+Code to test ratio: 642 (líneas de test) / 198 (líneas de código) -> **ratio 1:3.24** 
 
 NOC: 1 clase.
 
-    -SLOC: 597   
+    -SLOC: 350   
 
-    -LLOC: 277   
+    -LLOC: 198  
 
 
-NOT: 15 tests. Uno de White Box para Boletin.java.
+NOT: 4 tests.
 
-    -SLOC: 2586   
+    -SLOC: 776   
 
-    -LLOC: 2081   
+    -LLOC: 642   
 
 **Clases propias {SLOC, LLOC}:**  
 
@@ -21,10 +21,10 @@ NOT: 15 tests. Uno de White Box para Boletin.java.
     
 **Tests propios {SLOC, LLOC}:**  
 
-    -es.uva.inf.tds.pr4.RedTDDTest  {-, 372}   
-    -es.uva.inf.tds.pr4.RedBlackBoxTest  {-, 180}   
-    -es.uva.inf.tds.pr4.RedSequenceTest  {-, 164}   
-    -es.uva.inf.tds.pr4.WhiteBoxTest  {50, 65}   
+    -es.uva.inf.tds.pr4.RedTDDTest  {369, 319}   
+    -es.uva.inf.tds.pr4.RedBlackBoxTest  {179, 147}   
+    -es.uva.inf.tds.pr4.RedSequenceTest  {164, 127}   
+    -es.uva.inf.tds.pr4.WhiteBoxTest  {64, 49}   
     
     
 **Clases de terceros**  
