@@ -1,4 +1,4 @@
-MH: 14 horas y 30 minutos. 
+MH: 15 horas y 30 minutos. 
 
 Code to test ratio: 642 (líneas de test) / 198 (líneas de código) -> **ratio 1:3.24** 
 
