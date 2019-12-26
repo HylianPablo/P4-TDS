@@ -340,8 +340,6 @@ public class Red {
 		try(FileWriter file = new FileWriter(new File(pathOut))){
 			file.write(main.toString());
 		}
-		
-		
 		}catch(JSONException | IOException ee) {
 			ee.getMessage();
 		}

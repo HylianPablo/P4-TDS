@@ -41,16 +41,6 @@ public class RedWhiteBoxTest {
 
 	@Tag("WhiteBox")
 	@Test
-	public void correspondenciaLineasAmbasNulas() {
-		l1 = null;
-		l2 = null;
-		assertThrows(IllegalArgumentException.class, () -> {
-			r.correspondenciaLineas(l1, l2);
-		});
-	}
-
-	@Tag("WhiteBox")
-	@Test
 	public void conexionSinTransbordoAmbasNulas() {
 		assertThrows(IllegalArgumentException.class, () -> {
 			r.conexionSinTransbordo(e2, e2);

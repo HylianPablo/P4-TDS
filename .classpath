@@ -26,5 +26,7 @@
 	<classpathentry kind="lib" path="/home/pablo/lib/java/easymock-4.1.jar"/>
 	<classpathentry kind="lib" path="/home/pablo/lib/java/objenesis-3.1.jar"/>
 	<classpathentry kind="lib" path="/home/pablo/sonar-scanner-4.2.0.1873-linux/lib/sonar-scanner-cli-4.2.0.1873.jar"/>
+	<classpathentry kind="lib" path="/home/pablo/lib/java/javax.json-api-1.0.jar"/>
+	<classpathentry kind="lib" path="/home/pablo/lib/java/javax.json-1.0.4.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

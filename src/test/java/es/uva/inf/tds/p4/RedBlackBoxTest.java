@@ -144,9 +144,9 @@ public class RedBlackBoxTest {
 	@Tag("BlackBoxTestFirst")
 	@Tag("Isolation")
 	public void correspondenciaLineasSegundaNula() {
-		l2 = null;
+		Linea l3 = null;
 		assertThrows(IllegalArgumentException.class, () -> {
-			r.correspondenciaLineas(l1, l2);
+			r.correspondenciaLineas(l1, l3);
 		});
 	}
 

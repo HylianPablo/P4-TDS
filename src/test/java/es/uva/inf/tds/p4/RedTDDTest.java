@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 
+import javax.json.JsonException;
+
 import org.easymock.Mock;
 import org.json.JSONException;
 
@@ -196,9 +198,11 @@ public class RedTDDTest {
 	@Test
 	public void correspondenciaLineasNull() {
 		l1 = null;
+		replay(l2);
 		assertThrows(IllegalArgumentException.class, () -> {
 			r.correspondenciaLineas(l1, l2);
 		});
+		verify(l2);
 
 	}
 
@@ -332,6 +336,28 @@ public class RedTDDTest {
 		verify(l2);
 		verify(l3);
 	}
+	
+	/*
+	@Tag("Isolation")
+	@Tag("TDD")
+	@Test
+	public void readJsonError() {
+		String in = "dummyBad.json";
+		assertThrows(JsonException.class, () -> {
+			r.loadFrom(in).getArrayLineas();
+		});
+	}
+	
+	@Tag("Isolation")
+	@Tag("TDD")
+	@Test
+	public void updateJsonError() {
+		String in = "dummyBad.json";
+		assertThrows(JsonException.class, () -> {
+			r.loadFrom(in).getArrayLineas();
+		});
+	}
+	*/
 
 	@AfterEach
 	public void tearDown() {
