@@ -118,10 +118,12 @@ public class RedSequenceTest {
 		arr2.add(l2);
 		Red r2 = new Red(arr2);
 		String in = "dummy.json";
-		assertEquals(r2.getArrayLineas().length,r.loadFrom(in).getArrayLineas().length);
-		
+		assertEquals(r2.getArrayLineas().length, r.loadFrom(in).getArrayLineas().length);
+
 		r.addLinea(l3);
-		JSONAssert.assertEquals("{ \"lineas\" : [{\"linea0\":[{\"num\" : 1}, {\"color\" : \"Red\"}]}, {\"linea1\":[{\"num\" : 2}, {\"color\" : \"Blue\"}]}, {\"linea2\":[{\"num\" : 3}, {\"color\" : \"Green\"}]}]} ] }", r.updateTo("out.json"), JSONCompareMode.STRICT);	
+		JSONAssert.assertEquals(
+				"{ \"lineas\" : [{\"linea0\":[{\"num\" : 1}, {\"color\" : \"Red\"}]}, {\"linea1\":[{\"num\" : 2}, {\"color\" : \"Blue\"}]}, {\"linea2\":[{\"num\" : 3}, {\"color\" : \"Green\"}]}]} ] }",
+				r.updateTo("out.json"), JSONCompareMode.STRICT);
 		assertSame(3, r.getArrayLineas().length);
 		assertEquals(l3, r.getLinea("Green"));
 		assertEquals(l2, r.getLinea(2));
@@ -159,5 +161,4 @@ public class RedSequenceTest {
 		verify(e4);
 		verify(cgps2);
 	}
-
 }

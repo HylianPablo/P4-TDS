@@ -5,9 +5,7 @@ import java.util.List;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
 import javax.json.Json;
-import javax.json.JsonException;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.json.JsonReaderFactory;
@@ -37,12 +35,10 @@ public class Red {
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Red(List<Linea> al) {
-		if (al == null) {
+		if (al == null) 
 			throw new IllegalArgumentException();
-		}
-		if (al.size() < 2) {
+		if (al.size() < 2) 
 			throw new IllegalArgumentException();
-		}
 		lineas = (ArrayList) al;
 	}
 
@@ -94,6 +90,8 @@ public class Red {
 			throw new IllegalArgumentException();
 		}
 		if (isRepetida(l))
+			throw new IllegalArgumentException();
+		if(l.getNumero()!=lineas.get(lineas.size()-1).getNumero()+1)
 			throw new IllegalArgumentException();
 		lineas.add(l);
 	}
@@ -306,7 +304,7 @@ public class Red {
 			getting.add(l);		
 		}
 
-		}catch(JsonException | IOException ee) {
+		}catch(Exception ee) {
 			ee.getMessage();
 		}
 		return new Red(getting); 
@@ -340,7 +338,7 @@ public class Red {
 		try(FileWriter file = new FileWriter(new File(pathOut))){
 			file.write(main.toString());
 		}
-		}catch(JSONException | IOException ee) {
+		}catch(Exception ee) {
 			ee.getMessage();
 		}
 		return main.toString();

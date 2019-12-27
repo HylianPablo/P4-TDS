@@ -64,6 +64,20 @@ public class RedBlackBoxTest {
 			Red r2 = new Red(dummy);
 		});
 	}
+	
+	@Tag("BlackBoxTestFirst")
+	@Test
+	public void constructorNoEnOrden() {
+		expect(l3.getNumero()).andReturn(200).anyTimes();
+		expect(l3.getColor()).andReturn("Purple").anyTimes();
+		replay(l3);
+		ArrayList<Linea> arrl = new ArrayList<>();
+		arrl.add(l3);
+		assertThrows(IllegalArgumentException.class, () -> {
+			@SuppressWarnings("unused")
+			Red r2 = new Red(arrl);
+		});
+	}
 
 	@Tag("BlackBoxTestFirst")
 	@Tag("Isolation")
@@ -102,6 +116,25 @@ public class RedBlackBoxTest {
 		verify(l2);
 		verify(l3);
 	}
+	
+	@Tag("BlackBoxTestFirst")
+	@Tag("Isolation")
+	@Test
+	public void addLineaNumNOSeguido() {
+		expect(l3.getNumero()).andReturn(4).anyTimes();
+		expect(l3.getColor()).andReturn("Green").anyTimes();
+
+		replay(l3);
+
+		assertThrows(IllegalArgumentException.class, () -> {
+			r.addLinea(l3);
+		});
+
+		verify(l1);
+		verify(l2);
+		verify(l3);
+	}
+
 
 	@Tag("BlackBoxTestFirst")
 	@Tag("Isolation")
@@ -143,10 +176,11 @@ public class RedBlackBoxTest {
 
 	@Tag("BlackBoxTestFirst")
 	@Tag("Isolation")
+	@Test
 	public void correspondenciaLineasSegundaNula() {
-		Linea l3 = null;
+		Linea l2 = null;
 		assertThrows(IllegalArgumentException.class, () -> {
-			r.correspondenciaLineas(l1, l3);
+			r.correspondenciaLineas(l1, l2);
 		});
 	}
 

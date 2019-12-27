@@ -4,8 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 
-import javax.json.JsonException;
-
 import org.easymock.Mock;
 import org.json.JSONException;
 
@@ -44,6 +42,7 @@ public class RedTDDTest {
 		e = createMock(Estacion.class);
 		e2 = createMock(Estacion.class);
 		e3 = createMock(Estacion.class);
+		
 
 		expect(l1.getNumero()).andReturn(1).anyTimes();
 		expect(l1.getColor()).andReturn("Red").anyTimes();
@@ -55,14 +54,13 @@ public class RedTDDTest {
 		expect(l1.contieneEstacion(e3)).andReturn(false).anyTimes();
 		expect(l2.contieneEstacion(e2)).andReturn(true).anyTimes();
 		expect(l2.contieneEstacion(e3)).andReturn(true).anyTimes();
-
+		
 		ArrayList<Linea> al = new ArrayList<>();
 		al.add(l1);
 		al.add(l2);
 
 		r = new Red(al);
 		cgps = createMock(CoordenadasGPS.class);
-		// new CoordenadasGPS(10.0,-1.0);
 		argps = new CoordenadasGPS[1];
 		argps[0] = cgps;
 	}
@@ -313,7 +311,7 @@ public class RedTDDTest {
 		verify(cgps3);
 		verify(gps1);
 	}
-	
+
 	@Tag("Isolation")
 	@Tag("TDD")
 	@Test
@@ -329,35 +327,38 @@ public class RedTDDTest {
 		arr2.add(l2);
 		Red r2 = new Red(arr2);
 		String in = "dummy.json";
-		assertEquals(r2.getArrayLineas().length,r.loadFrom(in).getArrayLineas().length);
+		assertEquals(r2.getArrayLineas().length, r.loadFrom(in).getArrayLineas().length);
 		r.addLinea(l3);
-		JSONAssert.assertEquals("{ \"lineas\" : [{\"linea0\":[{\"num\" : 1}, {\"color\" : \"Red\"}]}, {\"linea1\":[{\"num\" : 2}, {\"color\" : \"Blue\"}]}, {\"linea2\":[{\"num\" : 3}, {\"color\" : \"Green\"}]}]} ] }", r.updateTo("out.json"), JSONCompareMode.STRICT);	
+		JSONAssert.assertEquals(
+				"{ \"lineas\" : [{\"linea0\":[{\"num\" : 1}, {\"color\" : \"Red\"}]}, {\"linea1\":[{\"num\" : 2}, {\"color\" : \"Blue\"}]}, {\"linea2\":[{\"num\" : 3}, {\"color\" : \"Green\"}]}]} ] }",
+				r.updateTo("out.json"), JSONCompareMode.STRICT);
 		verify(l1);
 		verify(l2);
 		verify(l3);
 	}
-	
-	/*
+
 	@Tag("Isolation")
+
 	@Tag("TDD")
+
 	@Test
 	public void readJsonError() {
-		String in = "dummyBad.json";
-		assertThrows(JsonException.class, () -> {
-			r.loadFrom(in).getArrayLineas();
+		String in = "noExiste.json";
+		assertThrows(Exception.class, () -> {
+			r.loadFrom(in);
 		});
 	}
-	
+
 	@Tag("Isolation")
+
 	@Tag("TDD")
+
 	@Test
 	public void updateJsonError() {
-		String in = "dummyBad.json";
-		assertThrows(JsonException.class, () -> {
-			r.loadFrom(in).getArrayLineas();
+		assertThrows(Exception.class, () -> {
+			r.updateTo(".");
 		});
 	}
-	*/
 
 	@AfterEach
 	public void tearDown() {
