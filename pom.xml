@@ -26,7 +26,7 @@
 			</properties>
 		</profile>
 		<profile>
-			<id>red</id>
+			<id>Red</id>
 			<properties>
 				<groups>Red&amp;TDD</groups>
 			</properties>
