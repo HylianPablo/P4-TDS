@@ -1,0 +1,11 @@
+{"lineas" : [
+	{"linea0":[
+	{"num" : 1}, {"color" : "Blue"}
+	]},
+	{"linea1":[
+		{"num" : 2}, {"color" : "Blue"}
+	]}, 
+	{"linea1":[
+		{n"num" : 3}, {"color" : "Green"}
+	]} 
+] }"
