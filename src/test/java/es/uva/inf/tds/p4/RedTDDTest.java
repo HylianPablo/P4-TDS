@@ -42,7 +42,6 @@ public class RedTDDTest {
 		e = createMock(Estacion.class);
 		e2 = createMock(Estacion.class);
 		e3 = createMock(Estacion.class);
-		
 
 		expect(l1.getNumero()).andReturn(1).anyTimes();
 		expect(l1.getColor()).andReturn("Red").anyTimes();
@@ -54,7 +53,7 @@ public class RedTDDTest {
 		expect(l1.contieneEstacion(e3)).andReturn(false).anyTimes();
 		expect(l2.contieneEstacion(e2)).andReturn(true).anyTimes();
 		expect(l2.contieneEstacion(e3)).andReturn(true).anyTimes();
-		
+
 		ArrayList<Linea> al = new ArrayList<>();
 		al.add(l1);
 		al.add(l2);
@@ -355,8 +354,8 @@ public class RedTDDTest {
 
 	@Test
 	public void updateJsonError() {
-			String s = r.updateTo(".");
-			assertEquals("{}",s);
+		String s = r.updateTo(".");
+		assertEquals("{}", s);
 	}
 
 	@AfterEach

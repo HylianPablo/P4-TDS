@@ -64,7 +64,7 @@ public class RedBlackBoxTest {
 			Red r2 = new Red(dummy);
 		});
 	}
-	
+
 	@Tag("BlackBoxTestFirst")
 	@Test
 	public void constructorNoEnOrden() {
@@ -116,7 +116,7 @@ public class RedBlackBoxTest {
 		verify(l2);
 		verify(l3);
 	}
-	
+
 	@Tag("BlackBoxTestFirst")
 	@Tag("Isolation")
 	@Test
@@ -134,7 +134,6 @@ public class RedBlackBoxTest {
 		verify(l2);
 		verify(l3);
 	}
-
 
 	@Tag("BlackBoxTestFirst")
 	@Tag("Isolation")
