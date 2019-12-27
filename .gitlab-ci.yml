@@ -34,12 +34,6 @@ test_isolation:
  except:
    - master
   
-test_integration:
- stage: test
- script: 
-   - mvn test -P Integration
- only:
-   - master
 
 sonar_publish_job:
   stage: qa
