@@ -1,19 +1,19 @@
-MH: 15 horas y 30 minutos. 
+MH: 17 horas y 30 minutos. 
 
-Code to test ratio: 642 (líneas de test) / 198 (líneas de código) -> **ratio 1:3.24** 
+Code to test ratio: 677 (líneas de test) / 198 (líneas de código) -> **ratio 1:3.42** 
 
 NOC: 1 clase.
 
-    -SLOC: 350   
+    -SLOC: 348   
 
-    -LLOC: 198  
+    -LLOC: 196  
 
 
 NOT: 4 tests.
 
-    -SLOC: 776   
+    -SLOC: 811   
 
-    -LLOC: 642   
+    -LLOC: 677   
 
 **Clases propias {SLOC, LLOC}:**  
 
@@ -21,8 +21,8 @@ NOT: 4 tests.
     
 **Tests propios {SLOC, LLOC}:**  
 
-    -es.uva.inf.tds.pr4.RedTDDTest  {369, 319}   
-    -es.uva.inf.tds.pr4.RedBlackBoxTest  {179, 147}   
+    -es.uva.inf.tds.pr4.RedTDDTest  {371, 321}   
+    -es.uva.inf.tds.pr4.RedBlackBoxTest  {212, 180}   
     -es.uva.inf.tds.pr4.RedSequenceTest  {164, 127}   
     -es.uva.inf.tds.pr4.WhiteBoxTest  {64, 49}   
     
