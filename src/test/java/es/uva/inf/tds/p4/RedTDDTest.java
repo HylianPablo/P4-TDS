@@ -355,9 +355,8 @@ public class RedTDDTest {
 
 	@Test
 	public void updateJsonError() {
-		assertThrows(Exception.class, () -> {
-			r.updateTo(".");
-		});
+			String s = r.updateTo(".");
+			assertEquals("{}",s);
 	}
 
 	@AfterEach
